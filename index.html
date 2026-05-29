@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -504,6 +505,195 @@
   .footer-contact { font-size: 12px; color: rgba(255,255,255,0.38); }
   .footer-contact a { color: var(--accent); text-decoration: none; }
 
+  /* GALLERY */
+  .gallery-filters {
+    display: flex;
+    gap: 8px;
+    padding: 16px 22px 4px;
+    flex-wrap: wrap;
+  }
+
+  .gf-btn {
+    font-family: 'Barlow', sans-serif;
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--navy);
+    background: rgba(0,43,107,0.06);
+    border: 1px solid rgba(0,43,107,0.18);
+    border-radius: 20px;
+    padding: 5px 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .gf-btn:hover, .gf-btn.active {
+    background: var(--navy);
+    color: var(--white);
+    border-color: var(--navy);
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding: 16px 22px 22px;
+  }
+
+  .gallery-item {
+    position: relative;
+    border-radius: 7px;
+    overflow: hidden;
+    cursor: pointer;
+    aspect-ratio: 4/3;
+    background: var(--off-white);
+    border: 1px solid var(--border);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .gallery-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,43,107,0.12);
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .gallery-item .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,43,107,0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .gallery-item:hover .overlay { opacity: 1; }
+
+  .overlay-icon {
+    width: 36px; height: 36px;
+    border: 2px solid rgba(255,255,255,0.8);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .overlay-icon::after {
+    content: '';
+    width: 12px; height: 12px;
+    border-top: 2px solid white;
+    border-right: 2px solid white;
+    transform: rotate(45deg) translate(-2px, 2px);
+  }
+
+  .overlay-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+    letter-spacing: 0.5px;
+    text-align: center;
+    padding: 0 12px;
+  }
+
+  .gallery-tag {
+    position: absolute;
+    top: 8px; left: 8px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: var(--accent);
+    color: var(--navy);
+    padding: 3px 8px;
+    border-radius: 3px;
+  }
+
+  /* LIGHTBOX */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .lightbox.open { display: flex; }
+
+  .lb-inner {
+    position: relative;
+    max-width: 880px;
+    width: 100%;
+    animation: lbIn 0.2s ease;
+  }
+
+  @keyframes lbIn { from{opacity:0;transform:scale(0.96);} to{opacity:1;transform:scale(1);} }
+
+  .lb-img {
+    width: 100%;
+    border-radius: 8px;
+    display: block;
+    max-height: 80vh;
+    object-fit: contain;
+  }
+
+  .lb-caption {
+    text-align: center;
+    margin-top: 14px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+  }
+
+  .lb-close {
+    position: absolute;
+    top: -14px; right: -14px;
+    width: 36px; height: 36px;
+    background: var(--accent);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    color: var(--navy);
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .lb-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50%;
+    width: 44px; height: 44px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    color: white;
+    transition: background 0.15s;
+  }
+
+  .lb-nav:hover { background: rgba(255,255,255,0.2); }
+  .lb-prev { left: -56px; }
+  .lb-next { right: -56px; }
+
+  .gallery-empty {
+    padding: 32px 22px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-light);
+    display: none;
+  }
+
   @media (max-width: 620px) {
     main { padding: 20px 18px 52px; }
     .header-inner { padding: 28px 20px 24px; }
@@ -511,6 +701,9 @@
     .proof-grid { grid-template-columns: 1fr; }
     .proof-item { border-right: none; }
     .proof-item:nth-child(3) { border-bottom: 1px solid var(--border); }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .lb-prev { left: -10px; }
+    .lb-next { right: -10px; }
   }
 </style>
 </head>
@@ -539,27 +732,24 @@
   <div class="card">
     <div class="card-head">
       <span class="card-num">01</span>
-      <span class="card-title">Example of video advert I created</span>
+      <span class="card-title">Video Work</span>
     </div>
     <div class="video-wrap">
-<iframe
-  style="width:100%; aspect-ratio:16/9; border-radius:8px; border:none; display:block;"
-  src="https://www.youtube.com/embed/7uzvWHArNZs"
-  allowfullscreen>
-</iframe>
-      <p class="video-note">Created using a Drone, Go Pro, Eleven Labs and Capcut</p>
-<iframe
-  style="width:100%; aspect-ratio:16/9; border-radius:8px; border:none; display:block;"
-  src="https://www.youtube.com/embed/YOUR_FIRST_VIDEO_ID"
-  allowfullscreen>
-</iframe>
 
-<iframe
-  style="width:100%; aspect-ratio:16/9; border-radius:8px; border:none; display:block; margin-top:16px;"
-  src="https://www.youtube.com/embed/7uzvWHArNZs"
-  allowfullscreen>
-</iframe>
-<p class="video-note">Created using a Heygen Avatar, Go Pro Camera, CapCut</p>
+      <iframe
+        style="width:100%; aspect-ratio:16/9; border-radius:8px; border:none; display:block;"
+        src="https://www.youtube.com/embed/7uzvWHArNZs"
+        allowfullscreen>
+      </iframe>
+      <p class="video-note">Created using a Drone, Go Pro, ElevenLabs and CapCut</p>
+
+      <iframe
+        style="width:100%; aspect-ratio:16/9; border-radius:8px; border:none; display:block; margin-top:16px;"
+        src="https://www.youtube.com/embed/YOUR_SECOND_VIDEO_ID"
+        allowfullscreen>
+      </iframe>
+      <p class="video-note">Created using a HeyGen Avatar and CapCut</p>
+
     </div>
   </div>
 
@@ -672,7 +862,32 @@
     </div>
   </div>
 
+  <div class="card">
+    <div class="card-head">
+      <span class="card-num">06</span>
+      <span class="card-title">Work Gallery</span>
+    </div>
+    <div class="gallery-filters">
+      <button class="gf-btn active" onclick="filterGallery('all', this)">All Work</button>
+      <button class="gf-btn" onclick="filterGallery('linkedin', this)">LinkedIn Growth</button>
+      <button class="gf-btn" onclick="filterGallery('email', this)">Email Campaigns</button>
+      <button class="gf-btn" onclick="filterGallery('design', this)">Design Work</button>
+    </div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+    <div class="gallery-empty" id="galleryEmpty">No images in this category yet.</div>
+  </div>
+
 </main>
+
+<div class="lightbox" id="lightbox" onclick="closeLightboxOutside(event)">
+  <div class="lb-inner">
+    <button class="lb-close" onclick="closeLightbox()">×</button>
+    <button class="lb-nav lb-prev" onclick="lbNav(-1)">&#8249;</button>
+    <button class="lb-nav lb-next" onclick="lbNav(1)">&#8250;</button>
+    <img class="lb-img" id="lbImg" src="" alt="" />
+    <div class="lb-caption" id="lbCaption"></div>
+  </div>
+</div>
 
 <footer>
   <div class="footer-inner">
@@ -685,7 +900,15 @@
 </footer>
 
 <script>
+const VIDEO_URL = 'YOUR_LOOM_OR_VIMEO_LINK_HERE';
 
+function openVideo() {
+  if (VIDEO_URL !== 'YOUR_LOOM_OR_VIMEO_LINK_HERE') {
+    window.open(VIDEO_URL, '_blank');
+  } else {
+    alert('Add your video link by replacing YOUR_LOOM_OR_VIMEO_LINK_HERE in the HTML file.');
+  }
+}
 
 const QA = [
   {
@@ -797,7 +1020,105 @@ function send() {
   ask(q);
   inp.focus();
 }
-</script>
+/* ============================================
+   GALLERY — HOW TO ADD YOUR IMAGES:
+
+   1. Put your image files in the same folder
+      as this HTML file.
+
+   2. Add entries to the IMAGES array below.
+      Each entry needs:
+        src:     the filename e.g. 'linkedin-stats.png'
+        caption: a short description
+        tag:     one of 'linkedin', 'email', or 'design'
+
+   Example:
+   { src: 'linkedin-growth.png', caption: 'CEO LinkedIn growth — 8,700 to 10,000+ followers', tag: 'linkedin' },
+   { src: 'email-results.png', caption: 'B2B email campaign — 24.28% open rate', tag: 'email' },
+   { src: 'canva-post.png', caption: 'Social media graphic created in Canva', tag: 'design' },
+============================================ */
+
+const IMAGES = [
+  // ADD YOUR IMAGES HERE — see instructions above
+  // { src: 'your-image.png', caption: 'Your caption here', tag: 'linkedin' },
+];
+
+let filteredImages = [...IMAGES];
+let currentIndex = 0;
+
+function buildGallery(images) {
+  const grid = document.getElementById('galleryGrid');
+  const empty = document.getElementById('galleryEmpty');
+  grid.innerHTML = '';
+
+  if (images.length === 0) {
+    empty.style.display = 'block';
+    return;
+  }
+
+  empty.style.display = 'none';
+
+  images.forEach((img, i) => {
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+    item.innerHTML = `
+      <img src="${img.src}" alt="${img.caption}" loading="lazy" onerror="this.parentElement.style.display='none'" />
+      <div class="gallery-tag">${img.tag}</div>
+      <div class="overlay">
+        <div class="overlay-icon"></div>
+        <div class="overlay-label">${img.caption}</div>
+      </div>
+    `;
+    item.addEventListener('click', () => openLightbox(i, images));
+    grid.appendChild(item);
+  });
+}
+
+function filterGallery(tag, btn) {
+  document.querySelectorAll('.gf-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filteredImages = tag === 'all' ? [...IMAGES] : IMAGES.filter(img => img.tag === tag);
+  buildGallery(filteredImages);
+}
+
+function openLightbox(index, images) {
+  currentIndex = index;
+  filteredImages = images;
+  updateLightbox();
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function updateLightbox() {
+  const img = filteredImages[currentIndex];
+  document.getElementById('lbImg').src = img.src;
+  document.getElementById('lbImg').alt = img.caption;
+  document.getElementById('lbCaption').textContent = img.caption + ' (' + (currentIndex + 1) + ' of ' + filteredImages.length + ')';
+}
+
+function lbNav(dir) {
+  currentIndex = (currentIndex + dir + filteredImages.length) % filteredImages.length;
+  updateLightbox();
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeLightboxOutside(e) {
+  if (e.target === document.getElementById('lightbox')) closeLightbox();
+}
+
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'ArrowLeft') lbNav(-1);
+  if (e.key === 'ArrowRight') lbNav(1);
+  if (e.key === 'Escape') closeLightbox();
+});
+
+buildGallery(IMAGES);
+
 
 </body>
 </html>
